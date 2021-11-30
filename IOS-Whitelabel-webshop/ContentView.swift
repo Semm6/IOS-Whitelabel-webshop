@@ -8,13 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var products = [Product]()
+    
     var body: some View {
-        VStack {
-            Text("First commit!")
-                .padding()
+        List(products) { product in
+            Text("\(product.name)")
         }
+        .onAppear() {
+            Api().loadData { (products) in
+                self.products = products
+            }
+        }.navigationTitle("Product List")
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
